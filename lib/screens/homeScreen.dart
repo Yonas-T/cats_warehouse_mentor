@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           else{
             final notifications = (state as NotificationsLoaded).storeNotifications;
             notifications.forEach((notification){
-              print(notification.title);
+              print(notification.body);
             });
             return Container();
           }

@@ -4,16 +4,15 @@ import 'package:cats_warehouse_mentor/constants/baseUrl.dart';
 import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../services/database/helpers/service.dart';
 
 class NotificationApiProviderService {
-  // final baseUrl = "http://10.0.2.2:3000";
 
   Future<Notifications> fetchNotificationsApiProvider() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    NotificationDataService notificationService = NotificationDataService();
 
-    // try {
     var token = prefs.getString('user');
-    print('object');
     final response = await http.get(
       Uri.parse(
           "https://qa.warehouse.ndrmcapps.org/api/cats_core/notifications/unread"),
@@ -23,23 +22,51 @@ class NotificationApiProviderService {
       },
     ).then((response) {
       print(response.body);
-      print("mannnnnn");
+      // dynamic allresponsedata = {
+      //   "success": true,
+      //   "data": [
+      //     {
+      //       "id": 1,
+      //       "read": false,
+      //       "created_at": 'datefiled',
+      //       "title": 'Dispatch Notification',
+      //       "date": "20221-10-21",
+      //       "body":
+      //           "Commodity with the following details has been dispatched to you: \n Dispatch Ref. = 0001\n Batch No. = 0001\n Commodity = Cerial \n Allocated Quantity = 1000.0\n Quantity = 1000.0\n Truck Plate No. = Supplier Plate No.\n Driver Name = Supplier driver\n Driver Phone = Supplier driver phone\n"
+      //     }
+      //   ]
+      // };
+      dynamic allresponsedata = jsonDecode(response.body);
+
+      allresponsedata['data'].forEach((element) {
+        String responsedata = element['body'];
+        var newdata = responsedata.split('\n');
+        Map<String, String> objects = {};
+        newdata.forEach((String element) {
+          if (element.contains('=')) {
+            objects[element.split('=')[0].replaceAll(' ', '')] =
+                element.split('=')[1];
+          } else if (objects.isEmpty) {
+            objects['body_title'] = element;
+          } else {}
+        });
+        element['body'] = objects;
+      });
+
       if (response.statusCode == 200) {
-        return Notifications.fromJson(jsonDecode(response.body));
+        Notifications notificationobj = Notifications.fromJson(allresponsedata);
+        notificationobj.data.forEach((element) {
+          notificationService.savenotification(element);
+        });
+        return notificationobj;
       } else {
         throw Exception('Failed to Notify');
       }
     }).catchError((onError) {
       print(onError);
     });
-    print('*' * 99);
-    // print(response.statusCode);
-    return response;
-    String responsedata = "this is a response \n another response";
-    print(responsedata);
 
-    // } catch (e) {
-    //   throw Exception('Failed to Notify');
-    // }
+    return response;
+
   }
 }

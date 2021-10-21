@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Notifications {
   bool success;
   List<NotificationData> data;
@@ -29,21 +31,23 @@ class NotificationData {
       required this.body});
 
   factory NotificationData.fromJson(Map<String, dynamic> parsedJson) {
+    var notificationBody = NotificationBody.fromJson(parsedJson['body']);
     return NotificationData(
         id: parsedJson['id'],
         read: parsedJson['read'],
         createdAt: parsedJson['created_at'],
         title: parsedJson['title'],
         date: parsedJson['date'],
-        body: parsedJson['body']);
+        body: notificationBody);
   }
-    notificationMap() {
+  notificationMap() {
+
     var mapping = Map<String, dynamic>();
     mapping['id'] = id;
-    mapping['read'] = read;
+    mapping['read'] = read.toString();
     mapping['created_at'] = createdAt;
     mapping['title'] = title;
-    mapping['body'] = body;
+    mapping['body'] =jsonEncode(body.notificationBodyMap());
     mapping['date'] = date;
 
     return mapping;
@@ -55,8 +59,8 @@ class NotificationBody {
   String dispatchRef;
   String batchNo;
   String commodity;
-  double allocatedQuantity;
-  double quantity;
+  String allocatedQuantity;
+  String quantity;
   String truckPlateNo;
   String driverName;
   String driverPhone;
@@ -75,13 +79,27 @@ class NotificationBody {
   factory NotificationBody.fromJson(Map<String, dynamic> parsedJson) {
     return NotificationBody(
         bodyTitle: parsedJson['body_title'],
-        dispatchRef: parsedJson['dispatch_ref'],
-        batchNo: parsedJson['batch_no'],
-        commodity: parsedJson['commodity'],
-        allocatedQuantity: parsedJson['allocated_quantity'],
-        quantity: parsedJson['quantity'],
-        truckPlateNo: parsedJson['truck_plate_no'],
-        driverName: parsedJson['driver_name'],
-        driverPhone: parsedJson['driver_phone']);
+        dispatchRef: parsedJson['DispatchRef.'],
+        batchNo: parsedJson['BatchNo.'],
+        commodity: parsedJson['Commodity'],
+        allocatedQuantity: parsedJson['AllocatedQuantity'],
+        quantity: parsedJson['Quantity'],
+        truckPlateNo: parsedJson['TruckPlateNo.'],
+        driverName: parsedJson['DriverName'],
+        driverPhone: parsedJson['DriverPhone']);
+  }
+  notificationBodyMap() {
+    var mapping = Map<String, dynamic>();
+    mapping['body_title'] = bodyTitle;
+    mapping['DispatchRef.'] = dispatchRef;
+    mapping['BatchNo.'] = batchNo;
+    mapping['Commodity'] = commodity;
+    mapping['AllocatedQuantity'] = allocatedQuantity;
+    mapping['Quantity'] = quantity;
+    mapping['TruckPlateNo.'] = truckPlateNo;
+    mapping['DriverName'] = driverName;
+    mapping['DriverPhone'] = driverPhone;
+
+    return mapping;
   }
 }

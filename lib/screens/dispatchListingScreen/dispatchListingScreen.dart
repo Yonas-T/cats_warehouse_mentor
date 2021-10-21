@@ -26,8 +26,8 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
         dispatchRef: '0001',
         batchNo: '00001',
         commodity: 'Cereal',
-        allocatedQuantity: 1000.0,
-        quantity: 1000.0,
+        allocatedQuantity: '1000.0',
+        quantity: '1000.0',
         truckPlateNo: 'Supplier Plate No',
         driverName: 'Supplier Driver',
         driverPhone: 'Supplier Driver Phone');

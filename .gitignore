@@ -9,7 +9,7 @@
 .history
 .svn/
 .fvm/
-pubspec.lock
+# pubspec.lock
 # IntelliJ related
 *.iml
 *.ipr
@@ -24,7 +24,7 @@ pubspec.lock
 # Flutter/Dart/Pub related
 db.json
 .fvm/
-.vscode/
+# .vscode/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/

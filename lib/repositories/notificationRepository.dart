@@ -4,9 +4,8 @@ import 'package:cats_warehouse_mentor/services/notificationServices/notification
 
 class NotificationRepository{
 
-  final NotificationApiProviderService notificationApiProvider;
+  final NotificationApiProviderService notificationApiProvider = NotificationApiProviderService();
 
-  NotificationRepository({required this.notificationApiProvider});
 
   Future<Notifications> fetchNotificationsRepository() async{
     return notificationApiProvider.fetchNotificationsApiProvider();

@@ -28,8 +28,7 @@ class AuthApiProvider {
     if (response.statusCode == 200) {
       Map<String, dynamic> decoded = jsonDecode(response.body);
       
-      
-      prefs.setString('user', 'isLoggedIn');
+      prefs.setString('user', json.decode(response.body)['token']);
       print(json.decode(response.body));
       return UserCred.fromJson(json.decode(response.body));
     } else {
@@ -37,3 +36,4 @@ class AuthApiProvider {
     }
   }
 }
+

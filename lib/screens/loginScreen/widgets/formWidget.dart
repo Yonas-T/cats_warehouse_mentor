@@ -109,14 +109,14 @@ class _FormWidgetState extends State<FormWidget> {
                                 height: kButtonHeight,
                                 child: TextButton(
                                   style: TextButton.styleFrom(
-                                      primary: Color(0x002E4150),
+                                      primary: Color(0xFF2E4150),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(16))),
                                   child: Text('Login',
                                       style: TextStyle(
                                           fontSize: kButtonFont,
-                                          color: Colors.black)),
+                                          color: Colors.white)),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       loginBloc.add(
@@ -133,11 +133,12 @@ class _FormWidgetState extends State<FormWidget> {
                               ),
                               SizedBox(height: 8),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Can\'t Login, Try Again',
                                       style: TextStyle(
                                           fontSize: kButtonFont,
-                                          color: Colors.black))
+                                          color: Colors.red))
                                 ],
                               )
                             ],

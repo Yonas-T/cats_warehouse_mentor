@@ -10,9 +10,9 @@ abstract class AuthblocState extends Equatable {
 class AuthblocInitial extends AuthblocState {}
 
 class AuthenticatedState extends AuthblocState {
-  UserCred user;
+  String token;
 
-  AuthenticatedState({required this.user});
+  AuthenticatedState({required this.token});
 
   @override
   List<Object> get props => [];

@@ -1,7 +1,9 @@
 import 'package:cats_warehouse_mentor/blocs/authBloc/authbloc_bloc.dart';
-import 'package:cats_warehouse_mentor/blocs/loginBloc/loginbloc_bloc.dart';
+import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/repositories/authRepositories.dart';
+import 'package:cats_warehouse_mentor/screens/dispatchListingScreen/dispatchListingScreen.dart';
 import 'package:cats_warehouse_mentor/screens/loginScreen/loginScreen.dart';
+import 'package:cats_warehouse_mentor/screens/tallyScreen/tallyScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +27,7 @@ class _CatsAppState extends State<CatsApp> {
       title: 'Flutter Demo',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: kNavy,
       ),
       home: BlocProvider(
           create: (context) =>
@@ -59,7 +62,7 @@ class _MyAppState extends State<MyApp> {
         }
         if (state is AuthenticatedState) {
           print('authentic');
-          return Container();
+          return TallyScreen();
         }
         return Container();
       },

@@ -28,12 +28,13 @@ class AuthblocBloc extends Bloc<AuthblocEvent, AuthblocState> {
         print('object');
         SharedPreferences prefs = await SharedPreferences.getInstance();
         print(prefs);
+        var token = prefs.getString('user')!;
+        print(token);
 
-        Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);
-        UserCred user = UserCred.fromJson(userMap);
-        print(user.token);
-        yield UnauthenticatedState('unAuth');
-        
+        if (token.isNotEmpty) {
+          yield AuthenticatedState(token: token);
+        }
+
         // yield AuthenticatedState(user: user);
       } catch (e) {
         yield UnauthenticatedState(e.toString());

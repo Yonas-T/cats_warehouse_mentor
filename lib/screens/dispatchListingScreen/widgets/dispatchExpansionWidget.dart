@@ -26,6 +26,7 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
     // dispatchBloc = BlocProvider.of<DispatchBloc>(context);
 
     DateTime date = DateTime.parse(widget.dispatchNotification.data.date);
+    print('date' + date.toString());
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),

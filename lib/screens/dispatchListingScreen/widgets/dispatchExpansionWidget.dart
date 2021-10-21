@@ -25,8 +25,7 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
   Widget build(BuildContext context) {
     // dispatchBloc = BlocProvider.of<DispatchBloc>(context);
 
-    DateTime date = DateTime.parse(widget.dispatchNotification.data.date);
-    print('date' + date.toString());
+    DateTime date = DateTime.parse(widget.dispatchNotification.data[0].date);
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -50,12 +49,12 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.3,
                 child: Text(
-                  '${widget.dispatchNotification.data.title}',
+                  '${widget.dispatchNotification.data[0].title}',
                   style: TextStyle(fontSize: kNormalFont, color: kNavy),
                 ),
               ),
               Text(
-                '${widget.dispatchNotification.data.body.allocatedQuantity}',
+                '${widget.dispatchNotification.data[0].body.allocatedQuantity}',
                 style: TextStyle(fontSize: kNormalFont, color: kNavy),
               ),
             ],
@@ -71,49 +70,49 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                 children: [
                   NotificationBodyWidget(
                     titleKey: 'Commodity: ',
-                    titleValue: widget.dispatchNotification.data.body.commodity,
+                    titleValue: widget.dispatchNotification.data[0].body.commodity,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Dispatch Ref: ',
                     titleValue:
-                        widget.dispatchNotification.data.body.dispatchRef,
+                        widget.dispatchNotification.data[0].body.dispatchRef,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Batch No: ',
-                    titleValue: widget.dispatchNotification.data.body.batchNo,
+                    titleValue: widget.dispatchNotification.data[0].body.batchNo,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Allocated Quantity: ',
                     titleValue: widget
-                        .dispatchNotification.data.body.allocatedQuantity
+                        .dispatchNotification.data[0].body.allocatedQuantity
                         .toString(),
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Quantity: ',
-                    titleValue: widget.dispatchNotification.data.body.quantity
+                    titleValue: widget.dispatchNotification.data[0].body.quantity
                         .toString(),
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Driver\'s name: ',
                     titleValue:
-                        widget.dispatchNotification.data.body.driverName,
+                        widget.dispatchNotification.data[0].body.driverName,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Driver\'s phone No: ',
                     titleValue:
-                        widget.dispatchNotification.data.body.driverPhone,
+                        widget.dispatchNotification.data[0].body.driverPhone,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Truck plate No: ',
                     titleValue:
-                        widget.dispatchNotification.data.body.truckPlateNo,
+                        widget.dispatchNotification.data[0].body.truckPlateNo,
                   ),
                   SizedBox(height: 16),
                   Row(

@@ -1,12 +1,14 @@
 class Notifications {
   bool success;
-  NotificationData data;
+  List<NotificationData> data;
 
   Notifications({required this.data, required this.success});
 
   factory Notifications.fromJson(Map<String, dynamic> parsedJson) {
-    return Notifications(
-        data: parsedJson['data'], success: parsedJson['success']);
+    final data = parsedJson['data'] as List;
+    List<NotificationData> dataList =
+        data.map((i) => NotificationData.fromJson(i)).toList();
+    return Notifications(data: dataList, success: parsedJson['success']);
   }
 }
 
@@ -34,6 +36,17 @@ class NotificationData {
         title: parsedJson['title'],
         date: parsedJson['date'],
         body: parsedJson['body']);
+  }
+    notificationMap() {
+    var mapping = Map<String, dynamic>();
+    mapping['id'] = id;
+    mapping['read'] = read;
+    mapping['created_at'] = createdAt;
+    mapping['title'] = title;
+    mapping['body'] = body;
+    mapping['date'] = date;
+
+    return mapping;
   }
 }
 

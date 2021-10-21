@@ -14,3 +14,4 @@ class DispatchRepository {
   Future<Notifications> getNotification() =>
       authApiProvider.getNotification();
 }
+

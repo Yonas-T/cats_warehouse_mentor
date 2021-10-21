@@ -22,6 +22,9 @@ pubspec.lock
 #.vscode/
 
 # Flutter/Dart/Pub related
+db.json
+.fvm/
+.vscode/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/

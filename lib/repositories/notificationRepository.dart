@@ -1,9 +1,9 @@
 import 'package:cats_warehouse_mentor/models/storeNotification.dart';
-import 'package:cats_warehouse_mentor/services/notificationApiProvider.dart';
+import 'package:cats_warehouse_mentor/services/notificationServices/notificationApiProvider.dart';
 
 class NotificationRepository{
 
-  final NotificationApiProvider notificationApiProvider;
+  final NotificationApiProviderService notificationApiProvider;
 
   NotificationRepository({required this.notificationApiProvider});
 

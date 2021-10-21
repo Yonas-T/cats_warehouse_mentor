@@ -1,27 +1,33 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:cats_warehouse_mentor/screens/homeScreen.dart';
+import 'package:cats_warehouse_mentor/services/notificationServices/notificationApiProvider.dart';
+import 'package:cats_warehouse_mentor/repositories/notificationRepository.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import './screens/appRouter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(MyApp(
-    router: AppRouter(),
-  ));
+import 'cubit/notifications_cubit.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String initialRoute = "/";
+  runApp(
+    MaterialApp(
+      initialRoute: initialRoute,
+      routes: <String, WidgetBuilder>{
+        "/": (_) {
+          return BlocProvider(
+            create: (context) => NotificationsCubit(
+                notificationRepository: NotificationRepository(
+                    notificationApiProvider: NotificationApiProviderService())),
+            child: HomeScreen(),
+          );
+        },
+      },
+    ),
+  );
 }
-
-class MyApp extends StatelessWidget {
-  final AppRouter router;
-  const MyApp({Key? key, required this.router}) : super(key: key);
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      onGenerateRoute: router.generateAppRoute,
-    );
-  }
-}
-
-

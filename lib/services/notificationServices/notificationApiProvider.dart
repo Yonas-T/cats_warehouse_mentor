@@ -13,24 +13,31 @@ class NotificationApiProviderService {
 
     // try {
     var token = prefs.getString('user');
-
+    print('object');
     final response = await http.get(
-      Uri.parse(baseUrl + "api/cats_core/notifications/unread"),
+      Uri.parse(
+          "https://qa.warehouse.ndrmcapps.org/api/cats_core/notifications/unread"),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       },
-    );
-    print(response.body);
-
+    ).then((response) {
+      print(response.body);
+      print("mannnnnn");
+      if (response.statusCode == 200) {
+        return Notifications.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to Notify');
+      }
+    }).catchError((onError) {
+      print(onError);
+    });
+    print('*' * 99);
+    // print(response.statusCode);
+    return response;
     String responsedata = "this is a response \n another response";
     print(responsedata);
 
-    if (response.statusCode == 200) {
-      return Notifications.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to Notify');
-    }
     // } catch (e) {
     //   throw Exception('Failed to Notify');
     // }

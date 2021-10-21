@@ -1,5 +1,3 @@
-
-
 class Dispatch {
   int id;
   String referenceNo;
@@ -15,6 +13,7 @@ class Dispatch {
   String preparedByEmail;
   String dispatchStatus;
   String destination;
+  bool? status;
 
   Dispatch(
       {required this.id,
@@ -30,25 +29,26 @@ class Dispatch {
       required this.preparedById,
       required this.preparedByEmail,
       required this.dispatchStatus,
-      required this.destination});
+      required this.destination,
+      this.status
+      });
 
   factory Dispatch.fromJson(Map<String, dynamic> json) {
     return Dispatch(
-    id: json['id'],
-    referenceNo: json['reference_no'],
-    allocationItemId: json['allocation_item_id'],
-    transporterId: json['transporter_id'],
-    transporterName: json['transporter_name'],
-    plateNo: json['plate_no'],
-    driverName: json['driver_name'],
-    driverPhone: json['driver_phone'],
-    quantity: json['quantity'],
-    remark: json['remark'],
-    preparedById: json['prepared_by_id'],
-    preparedByEmail: json['prepared_by_email'],
-    dispatchStatus: json['dispatch_status'],
-    destination: json['destination']
-    );
+        id: json['id'],
+        referenceNo: json['reference_no'],
+        allocationItemId: json['allocation_item_id'],
+        transporterId: json['transporter_id'],
+        transporterName: json['transporter_name'],
+        plateNo: json['plate_no'],
+        driverName: json['driver_name'],
+        driverPhone: json['driver_phone'],
+        quantity: json['quantity'],
+        remark: json['remark'],
+        preparedById: json['prepared_by_id'],
+        preparedByEmail: json['prepared_by_email'],
+        dispatchStatus: json['dispatch_status'],
+        destination: json['destination']);
   }
 
   Map<String, dynamic> toJson() {
@@ -68,5 +68,24 @@ class Dispatch {
     data['dispatch_status'] = this.dispatchStatus;
     data['destination'] = this.destination;
     return data;
+  }
+
+    dispatchMap() {
+    var mapping = Map<String, dynamic>();
+    mapping['id'] = id;
+    mapping['reference_no'] = referenceNo;
+    mapping['allocation_item_id'] = allocationItemId;
+    mapping['transporter_id'] = transporterId;
+    mapping['transporter_name'] = transporterName;
+    mapping['plate_no'] = plateNo;
+    mapping['driver_name'] = driverName;
+    mapping['driver_phone'] = driverPhone;
+    mapping['quantity'] = quantity;
+    mapping['remark'] = remark;
+    mapping['prepared_by_id'] = preparedById;
+    mapping['prepared_by_email'] = preparedByEmail;
+    mapping['dispatch_status'] = dispatchStatus;
+    mapping['destination'] = destination;
+    return mapping;
   }
 }

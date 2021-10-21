@@ -1,4 +1,7 @@
-import 'models.dart';
+import '../../../models/receipt.dart';
+import '../../../models/dispatch.dart';
+import '../../../models/notifications.dart';
+
 import '../repositories/repository.dart';
 
 class NotificationDataService {
@@ -35,7 +38,7 @@ class DispatchService {
     _repository = Repository();
   }
 
-  savedispatch(DispatchData dispatch) async {
+  savedispatch(Dispatch dispatch) async {
 
     return await _repository!.insertData('dispatch', dispatch.dispatchMap());
   }
@@ -44,7 +47,7 @@ class DispatchService {
     return await _repository!.readData('dispatch');
   }
 
-  updatedispatch(DispatchData dispatch) async {
+  updatedispatch(Dispatch dispatch) async {
 
     return await _repository!.updateData('dispatch', dispatch.dispatchMap());
   }

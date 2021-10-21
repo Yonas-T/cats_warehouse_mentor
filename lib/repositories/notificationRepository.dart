@@ -1,3 +1,4 @@
+import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:cats_warehouse_mentor/models/storeNotification.dart';
 import 'package:cats_warehouse_mentor/services/notificationServices/notificationApiProvider.dart';
 
@@ -7,9 +8,9 @@ class NotificationRepository{
 
   NotificationRepository({required this.notificationApiProvider});
 
-  Future<List<StoreNotification>> fetchNotificationsRepository() async{
-    final notificationsRaw = await notificationApiProvider.fetchNotificationsApi();
-    return notificationsRaw!.map((e) => StoreNotification.fromJson(e)).toList();
+  Future<Notifications> fetchNotificationsRepository() async{
+    return notificationApiProvider.fetchNotificationsApiProvider();
+    // return notificationsRaw!.map((e) => StoreNotification.fromJson(e)).toList();
   }
 
 }

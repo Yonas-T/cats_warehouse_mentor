@@ -23,7 +23,7 @@ class AppRouter{
           child: HomeScreen(),
         ));
       case LOGIN_SCREEN:
-        return MaterialPageRoute(builder: (_)=> LoginScreen());
+        return MaterialPageRoute(builder: (_)=> LoginScreen(authRepository: null,));
       
       default:
         return null;

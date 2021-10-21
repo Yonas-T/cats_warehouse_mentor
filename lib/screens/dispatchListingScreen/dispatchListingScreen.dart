@@ -17,7 +17,7 @@ class DispatchListingScreen extends StatefulWidget {
 
 class _DispatchListingScreenState extends State<DispatchListingScreen> {
   List<Notifications> dispatchToPass = [];
-  NotificationData? notifData;
+  List<NotificationData>? notifData;
   NotificationBody? notifBody;
   @override
   void initState() {
@@ -31,13 +31,13 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
         truckPlateNo: 'Supplier Plate No',
         driverName: 'Supplier Driver',
         driverPhone: 'Supplier Driver Phone');
-    notifData = NotificationData(
+    notifData!.add(NotificationData(
         id: 1,
         read: false,
         createdAt: '2021-10-15T12:39:02.066Z',
         title: 'Dispatch Notification',
         date: '2021-10-18',
-        body: notifBody!);
+        body: notifBody!)) ;
     dispatchToPass.add(Notifications(data: notifData!, success: true));
     super.initState();
   }

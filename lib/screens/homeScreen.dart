@@ -22,11 +22,11 @@ class HomeScreen extends StatelessWidget {
                       final notifications =
                           // ignore: unnecessary_cast
                           (state as NotificationsLoaded).storeNotifications;
-                      notifications.forEach((notification) {
+                      notifications.data.forEach((notification) {
                         NotificationService().showNotification(
                             id: 0,
                             title: notification.title,
-                            body: notification.body);
+                            body: notification.body.bodyTitle);
                       });
                     }
                   },
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
           } else {
             final notifications =
                 (state as NotificationsLoaded).storeNotifications;
-            notifications.forEach((notification) {
+            notifications.data.forEach((notification) {
               print(notification.body);
             });
             return Container();

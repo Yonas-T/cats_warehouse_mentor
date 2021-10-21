@@ -6,6 +6,6 @@ abstract class NotificationsState {}
 class NotificationsInitial extends NotificationsState {}
 
 class NotificationsLoaded extends NotificationsState {
-  late final List<StoreNotification> storeNotifications;
+  late final Notifications storeNotifications;
   NotificationsLoaded({required this.storeNotifications});
 }

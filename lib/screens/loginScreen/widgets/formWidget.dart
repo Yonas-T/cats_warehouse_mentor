@@ -1,6 +1,7 @@
 import 'package:cats_warehouse_mentor/blocs/loginBloc/loginbloc_bloc.dart';
 import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/constants/constants.dart';
+import 'package:cats_warehouse_mentor/screens/dispatchConfirmationScreen/dispatchConfirmationScreen.dart';
 import 'package:cats_warehouse_mentor/utils/helperFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,7 +97,10 @@ class _FormWidgetState extends State<FormWidget> {
                     listener: (context, state) {
                       print(state);
                       if (state is LoginSuccessState) {
-                        // navigateToHomeScreen(context, state.user);
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return DispatchConfirmationScreen();
+                        }));
                       }
                     },
                     child: BlocBuilder<LoginblocBloc, LoginblocState>(
@@ -107,13 +111,13 @@ class _FormWidgetState extends State<FormWidget> {
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: kButtonHeight,
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                      primary: Color(0xFF2E4150),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: kNavy,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(16))),
-                                  child: Text('Login',
+                                  child: Text('Retry',
                                       style: TextStyle(
                                           fontSize: kButtonFont,
                                           color: Colors.white)),

@@ -79,8 +79,7 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                 children: [
                   NotificationBodyWidget(
                     titleKey: 'Commodity: ',
-                    titleValue:
-                        widget.dispatchNotification.data[0].body.commodity,
+                    titleValue: widget.dispatchNotification.data[0].body.commodity,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
@@ -104,8 +103,7 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Quantity: ',
-                    titleValue: widget
-                        .dispatchNotification.data[0].body.quantity
+                    titleValue: widget.dispatchNotification.data[0].body.quantity
                         .toString(),
                   ),
                   SizedBox(height: 4),

@@ -68,12 +68,11 @@ class _MyAppState extends State<MyApp> {
         }
         if (state is AuthenticatedState) {
           print('authentic');
-          return 
-          // TallyParentScreen(
-          // );
-          DispatchListingScreen(
-            dispatchRepository: widget.dispatchRepository,
+          return HomeScreenParent(
           );
+          // DispatchListingScreen(
+          //   dispatchRepository: widget.dispatchRepository,
+          // );
         }
         return Container();
       },

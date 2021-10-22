@@ -443,9 +443,8 @@ class _TallyScreenState extends State<TallyScreen> {
                               widget.notificationPassed.data[0].body.driverName,
                           driverPhone: widget
                               .notificationPassed.data[0].body.driverPhone,
-                          quantity: widget
-                              .notificationPassed.data[0].body.quantity
-                              .round(),
+                          quantity: int.parse(widget
+                              .notificationPassed.data[0].body.quantity),
                           remark: damageReasons[0],
                           preparedById: 1,
                           preparedByEmail: 'preparedByEmail',

@@ -12,24 +12,24 @@ class NotificationDataService {
   }
 
   savenotification(NotificationData notification) async {
-
-    return await _repository!.insertData('notificationdata', notification.notificationMap());
+    return await _repository!
+        .insertData('notificationdata', notification.notificationMap());
   }
 
   readnotification() async {
+    print(await _repository!.readData('notificationdata'));
     return await _repository!.readData('notificationdata');
   }
 
   updatenotification(NotificationData notification) async {
-
-    return await _repository!.updateData('notificationdata', notification.notificationMap());
+    return await _repository!
+        .updateData('notificationdata', notification.notificationMap());
   }
 
   deletenotification(notificationId) async {
     return await _repository!.deleteData('notificationdata', notificationId);
   }
 }
-
 
 class DispatchService {
   Repository? _repository;
@@ -39,7 +39,6 @@ class DispatchService {
   }
 
   savedispatch(Dispatch dispatch) async {
-
     return await _repository!.insertData('dispatch', dispatch.dispatchMap());
   }
 
@@ -48,7 +47,6 @@ class DispatchService {
   }
 
   updatedispatch(Dispatch dispatch) async {
-
     return await _repository!.updateData('dispatch', dispatch.dispatchMap());
   }
 
@@ -56,8 +54,6 @@ class DispatchService {
     return await _repository!.deleteData('dispatch', dispatchId);
   }
 }
-
-
 
 class ReceiptService {
   Repository? _repository;
@@ -67,7 +63,6 @@ class ReceiptService {
   }
 
   savereceipt(ReceiptData receipt) async {
-
     return await _repository!.insertData('receipt', receipt.receiptMap());
   }
 
@@ -76,7 +71,6 @@ class ReceiptService {
   }
 
   updatereceipt(ReceiptData receipt) async {
-
     return await _repository!.updateData('receipt', receipt.receiptMap());
   }
 

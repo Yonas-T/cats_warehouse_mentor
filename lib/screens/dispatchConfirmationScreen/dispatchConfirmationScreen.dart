@@ -16,6 +16,7 @@ class _DispatchConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Confirm', style: TextStyle(color: kWhite, fontSize: kTitleBoldFont),),
         backgroundColor: kNavy,
       ),
       body: Container(

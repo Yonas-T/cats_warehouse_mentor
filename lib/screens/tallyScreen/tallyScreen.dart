@@ -58,6 +58,7 @@ class _TallyScreenState extends State<TallyScreen> {
   @override
   void initState() {
     dispatchBloc = DispatchBloc(dispatchRepository: widget.dispatchRepository);
+    textController.text = 1.toString();
     dispatchBloc!.add(DispatchFetchEvent());
     commodityAmount = 0;
     damagedAmount = 0;
@@ -178,6 +179,10 @@ class _TallyScreenState extends State<TallyScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Count',
+          style: TextStyle(color: kWhite, fontSize: kTitleBoldFont),
+        ),
         backgroundColor: kNavy,
       ),
       body: BlocListener<DispatchBloc, DispatchState>(
@@ -442,8 +447,8 @@ class _TallyScreenState extends State<TallyScreen> {
                               widget.notificationPassed.data[0].body.driverName,
                           driverPhone: widget
                               .notificationPassed.data[0].body.driverPhone,
-                          quantity: int.parse(widget
-                              .notificationPassed.data[0].body.quantity),
+                          quantity:
+                              widget.notificationPassed.data[0].body.quantity,
                           remark: damageReasons[0],
                           preparedById: 1,
                           preparedByEmail: 'preparedByEmail',

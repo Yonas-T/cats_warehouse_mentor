@@ -5,10 +5,13 @@ import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/baseUrl.dart';
+import './database/helpers/service.dart';
 
 class DispatchApiProvider {
   Future<Dispatch> dispatch(Dispatch dispatch) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    DispatchService dispatchService = DispatchService();
 
     Map<String, dynamic> postJson = {
       "id": dispatch.id,
@@ -41,8 +44,12 @@ class DispatchApiProvider {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
+      postJson['status'] = 'true';
+      dispatchService
+          .savedispatch(Dispatch.fromJson(postJson));
       return Dispatch.fromJson(json.decode(response.body));
     } else {
+      postJson['status'] = 'false';
       throw Exception('Failed to load');
     }
   }

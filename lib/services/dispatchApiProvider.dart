@@ -45,8 +45,12 @@ class DispatchApiProvider {
 
     if (response.statusCode == 200) {
       postJson['status'] = 'true';
-      dispatchService
-          .savedispatch(Dispatch.fromJson(postJson));
+
+      try {
+        dispatchService.savedispatch(Dispatch.fromJson(postJson));
+      } catch (e) {
+        print("exists already");
+      }
       return Dispatch.fromJson(json.decode(response.body));
     } else {
       postJson['status'] = 'false';

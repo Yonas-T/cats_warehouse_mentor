@@ -13,7 +13,7 @@ class Dispatch {
   String preparedByEmail;
   String dispatchStatus;
   String destination;
-  bool? status;
+  String? status;
 
   Dispatch(
       {required this.id,

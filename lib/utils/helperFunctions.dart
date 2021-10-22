@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../services/database/helpers/service.dart';
+import '../services/dispatchApiProvider.dart';
+import 'package:cats_warehouse_mentor/models/dispatch.dart';
+
+DispatchApiProvider dispatchApiProvider = DispatchApiProvider();
 
 String? validatePassword(String? value) {
   if ((value?.length ?? 0) < 6)
@@ -33,10 +36,15 @@ Future<void> initConnectivity() async {
 
     if (result == ConnectivityResult.mobile ||
         result == ConnectivityResult.wifi) {
-      List fromLocalDb = dispatchService.readdispatch();
+      print("connected");
+      List fromLocalDb = await dispatchService.readdispatch();
+      print(fromLocalDb);
+
       fromLocalDb.forEach((element) {
-        // element['status'] == 'false' ?
-        log(element);
+        if (element['status'] == 'false') {
+          element.remove('status');
+          dispatchApiProvider.dispatch(Dispatch.fromJson(element));
+        }
       });
     } else {}
   } on PlatformException catch (e) {

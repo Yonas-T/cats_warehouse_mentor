@@ -17,8 +17,9 @@ class DispatchListingScreen extends StatefulWidget {
 
 class _DispatchListingScreenState extends State<DispatchListingScreen> {
   List<Notifications> dispatchToPass = [];
-  List<NotificationData>? notifData;
+  List<NotificationData> notifData = [];
   NotificationBody? notifBody;
+
   @override
   void initState() {
     notifBody = NotificationBody(
@@ -37,8 +38,8 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
         createdAt: '2021-10-15T12:39:02.066Z',
         title: 'Dispatch Notification',
         date: '2021-10-18',
-        body: notifBody!)) ;
-    dispatchToPass.add(Notifications(data: notifData!, success: true));
+        body: notifBody!));
+    dispatchToPass.add(Notifications(data: notifData, success: true));
     super.initState();
   }
 
@@ -65,26 +66,26 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
             child: Expanded(
               child: BlocBuilder<DispatchBloc, DispatchState>(
                 builder: (context, state) {
-                  return ListView.builder(
-                      itemCount: dispatchToPass.length,
-                      itemBuilder: (context, index) {
-                        if (state is DispatchLoadingState) {
-                          return CircularProgressIndicator();
-                        }
-                        if (state is DispatchProceedState) {
-                          //TODO navigate to tally screen
-                        }
-                        if (state is DispatchFailedState) {
-                          return Text('failed');
-                        }
-                        if (state is DispatchFetchedState) {
+                  // if (state is DispatchLoadingState) {
+                  //   return CircularProgressIndicator();
+                  // }
+                  // if (state is DispatchProceedState) {
+                  //   //TODO navigate to tally screen
+                  // }
+                  // if (state is DispatchFailedState) {
+                  //   return Text('failed');
+                  // }
+                  // if (state is DispatchLoadedState) {
+                    return ListView.builder(
+                        itemCount: dispatchToPass.length,
+                        itemBuilder: (context, index) {
                           return DispatchExpansionWidget(
                             state: state,
                             dispatchNotification: dispatchToPass[index],
                           );
-                        }
-                        return Container();
-                      });
+                        });
+                  // }
+                  return Container();
                 },
               ),
             ),

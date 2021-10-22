@@ -9,7 +9,6 @@ abstract class DispatchState extends Equatable {
 
 class DispatchInitialState extends DispatchState {}
 
-class DispatchFetchedState extends DispatchState {}
 
 class DispatchFailedState extends DispatchState {
   String message;
@@ -20,6 +19,12 @@ class DispatchFailedState extends DispatchState {
 }
 
 class DispatchLoadingState extends DispatchState {}
+
+class DispatchLoadedState extends DispatchState {
+  Notifications dispatchLoaded;
+
+  DispatchLoadedState({required this.dispatchLoaded});
+}
 
 class DispatchIncrementedState extends DispatchState {
   int currentValue;

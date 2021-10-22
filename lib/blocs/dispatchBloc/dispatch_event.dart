@@ -40,7 +40,14 @@ class DamagedCountDecrement extends DispatchEvent {
   List<Object> get props => [currentValue];
 }
 
-class StartCount extends DispatchEvent {}
+class StartCount extends DispatchEvent {
+  Notifications notificationDataToCount;
+
+  StartCount({required this.notificationDataToCount});
+
+  @override
+  List<Object> get props => [notificationDataToCount];
+}
 
 // class CountBatchSize extends DispatchEvent {}
 
@@ -60,6 +67,5 @@ class WarehouseManagerConfirm extends DispatchEvent {
   @override
   List<Object> get props => [dispatchConfirmed];
 }
-
 
 class Submit extends DispatchEvent {}

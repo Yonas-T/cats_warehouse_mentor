@@ -3,6 +3,8 @@ import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/constants/constants.dart';
 import 'package:cats_warehouse_mentor/constants/days.dart';
 import 'package:cats_warehouse_mentor/models/notifications.dart';
+import 'package:cats_warehouse_mentor/repositories/dispatchRepository.dart';
+import 'package:cats_warehouse_mentor/screens/tallyScreen/tallyScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +21,14 @@ class DispatchExpansionWidget extends StatefulWidget {
 }
 
 class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
-  late DispatchBloc dispatchBloc;
+  DispatchBloc? dispatchBloc;
+  DispatchRepository dispatchRepository = DispatchRepository();
+
+  @override
+  void initState() {
+    dispatchBloc = DispatchBloc(dispatchRepository: dispatchRepository);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +90,8 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Batch No: ',
-                    titleValue: widget.dispatchNotification.data[0].body.batchNo,
+                    titleValue:
+                        widget.dispatchNotification.data[0].body.batchNo,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
@@ -128,9 +138,17 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                             style: TextStyle(
                                 fontSize: kButtonFont, color: Colors.white)),
                         onPressed: () {
-                          // dispatchBloc.add(
-                          //   StartCount(),
-                          // );
+                          dispatchBloc!.add(
+                            StartCount(
+                                notificationDataToCount:
+                                    widget.dispatchNotification),
+                          );
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return TallyParentScreen(
+                                notificationForCount:
+                                    widget.dispatchNotification);
+                          }));
                         },
                       ),
                     ],
@@ -142,7 +160,6 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
         ),
       ),
     );
-    ;
   }
 }
 

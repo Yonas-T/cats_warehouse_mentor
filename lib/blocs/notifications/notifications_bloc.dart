@@ -8,21 +8,22 @@ part 'notifications_event.dart';
 part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
-  NotificationRepository? notificationRepository;
-  NotificationsBloc({required NotificationRepository? notificationRepository})
-      : super(NotificationsInitial()) {
-    this.notificationRepository = notificationRepository;
-  }
+  NotificationRepository notificationRepository;
+  
+  NotificationsBloc({required NotificationRepository notificationRepository})
+      : notificationRepository = notificationRepository,
+        super(NotificationsInitial());
 
   NotificationsState get initialState => NotificationsInitial();
 
   Stream<NotificationsState> mapEventToState(NotificationsEvent event) async* {
     if (event is LoadNotification) {
-      yield NotificationsLoading();
+      yield NotificationsInitial();
       try {
         print('entry block');
         Notifications notification =
-            await notificationRepository!.fetchNotificationsRepository();
+            await notificationRepository.fetchNotificationsRepository();
+        print('in bloc'+notification.data.toString());
         // notification.data.forEach((element) {
 
         // });

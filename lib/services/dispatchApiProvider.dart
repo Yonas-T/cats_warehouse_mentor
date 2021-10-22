@@ -38,7 +38,6 @@ class DispatchApiProvider {
     );
 
     print('BODY: ${response.body}');
-    print('DECODED: ${json.decode(response.body)['token'].runtimeType}');
     print(response.statusCode);
 
     if (response.statusCode == 200) {

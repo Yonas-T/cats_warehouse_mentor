@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
 
-class CommodityReportWidget extends StatelessWidget {
-  const CommodityReportWidget({Key? key}) : super(key: key);
+class CommodityReportWidget extends StatefulWidget {
 
+  @override
+  State<CommodityReportWidget> createState() => _CommodityReportWidgetState();
+}
+
+class _CommodityReportWidgetState extends State<CommodityReportWidget> {
+  
+  Map allresponsedata = {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "read": false,
+            "created_at": '12-02-2020T00:00:00',
+            "title": 'Dispatch Notification',
+            "date": "20221-10-21",
+            "body":
+                "Commodity with the following details has been dispatched to you: \n Dispatch Ref. = 0001\n Batch No. = 0001\n Commodity = Cerial \n Allocated Quantity = 1000.0\n Quantity = 1000.0\n Truck Plate No. = Supplier Plate No.\n Driver Name = Supplier driver\n Driver Phone = Supplier driver phone\n"
+          }
+        ]
+      };
+
+  @override
+  void initState() {
+    
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,9 +43,9 @@ class CommodityReportWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
                     alignment: Alignment.centerRight,
-                    child: Text('Title'),
+                    child: Text(''),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
@@ -41,12 +66,12 @@ class CommodityReportWidget extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Text('Ref. No'),
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: 16),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 25,
                       alignment: Alignment.centerLeft,
-                      child: Text('Amount'),
+                      child: Text('0001'),
                     )
                   ],
                 )),
@@ -61,7 +86,7 @@ class CommodityReportWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text('Transporter name'),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
@@ -82,12 +107,12 @@ class CommodityReportWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text('Plate no'),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
                     alignment: Alignment.centerLeft,
-                    child: Text('Amount'),
+                    child: Text('Supplier Plate No.'),
                   )
                 ],
               ),
@@ -103,12 +128,12 @@ class CommodityReportWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text('Quantity'),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
                     alignment: Alignment.centerLeft,
-                    child: Text('Amount'),
+                    child: Text('1000'),
                   )
                 ],
               ),
@@ -124,12 +149,12 @@ class CommodityReportWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text('Status'),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
                     alignment: Alignment.centerLeft,
-                    child: Text('Amount'),
+                    child: Text('Recieved'),
                   )
                 ],
               ),
@@ -145,12 +170,12 @@ class CommodityReportWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text('Remark'),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 16),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 25,
                     alignment: Alignment.centerLeft,
-                    child: Text('Amount'),
+                    child: Text(''),
                   )
                 ],
               ),

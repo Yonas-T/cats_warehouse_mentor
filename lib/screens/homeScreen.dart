@@ -19,7 +19,7 @@ class _HomeScreenParentState extends State<HomeScreenParent> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
+      create: (context) =>
           NotificationsBloc(notificationRepository: notificationRepository),
       child: HomeScreen(notificationRepository: notificationRepository),
     );
@@ -39,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    notificationsBloc =
-        NotificationsBloc(notificationRepository: widget.notificationRepository);
+    notificationsBloc = NotificationsBloc(
+        notificationRepository: widget.notificationRepository);
     notificationsBloc!.add(LoadNotification());
     super.initState();
   }
@@ -52,40 +52,61 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("Home Screen"),
         actions: [
-          BlocBuilder<NotificationsBloc, NotificationsState>(
-            builder: (context, state) {
-              return IconButton(
-                  onPressed: () async {
-                    if (state is NotificationsSuccess) {
-                      final notifications = state.notifications;
-                      notifications.data.forEach((notification) {
-                        NotificationService().showNotification(
-                            id: 0,
-                            title: notification.title,
-                            body: notification.body.bodyTitle);
-                      });
-                    }
-                  },
-                  icon: Icon(Icons.add));
+          BlocListener<NotificationsBloc, NotificationsState>(
+            listener: (context, state) {
+              
             },
+            child: BlocBuilder<NotificationsBloc, NotificationsState>(
+              builder: (context, state) {
+                print('Appbar state: ');
+                if (state is NotificationsLoading) {
+                  return Text('loading');
+                }
+                if (state is NotificationsFailed) {
+                  return Text('failed');
+                }
+                if (state is NotificationsSuccess) {
+                  return IconButton(
+                      onPressed: () {
+                        final notifications = state.notifications;
+                        print('in builder: ');
+                        notifications.data.forEach((notification) {
+                          NotificationService().showNotification(
+                              id: 0,
+                              title: notification.title,
+                              body: notification.body.bodyTitle);
+                        });
+                      },
+                      icon: Icon(Icons.add));
+                }
+                return Container();
+              },
+            ),
           )
         ],
       ),
-      body: BlocBuilder<NotificationsBloc, NotificationsState>(
-        builder: (context, state) {
-          if (state is NotificationsInitial) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            // final notifications = state.;
-            // notifications.data.forEach((notification) {
-            //   print(notification.body);
-            // });
-            return Container();
-          }
-        },
-      ),
+      body: Container(),
+      // body: BlocBuilder<NotificationsBloc, NotificationsState>(
+      //   builder: (context, state) {
+      //     print(state);
+      //     if (state is NotificationsInitial) {
+      //       return Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     }
+      //     if (state is NotificationsLoading) {
+      //       return Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     }
+      //     if (state is NotificationsSuccess) {
+      //       return Container(
+      //         child: Text('got notification'),
+      //       );
+      //     }
+      //     return Container();
+      //   },
+      // ),
     );
   }
 }

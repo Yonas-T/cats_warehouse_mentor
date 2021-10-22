@@ -1,6 +1,6 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:cats_warehouse_mentor/models/dispatch.dart';
+import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:cats_warehouse_mentor/repositories/dispatchRepository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -23,8 +23,8 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
     if (event is DispatchFetchEvent) {
       yield DispatchInitialState();
       try {
-        var notificationFromLocal = await dispatchRepository!.getNotification();
-        yield DispatchFetchedState();
+        var notificationFrom = await dispatchRepository!.getNotification();
+        yield DispatchLoadedState(dispatchLoaded: notificationFrom);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());
       }
@@ -69,6 +69,8 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
     if (event is FinishCount) {
       try {
         Dispatch dispatchToConfirm = event.dispatchToConfirm;
+        var dispatchCounted =
+            await dispatchRepository!.dispatch(dispatchToConfirm);
         yield DispatchProceedState(dispatchToConfirm: dispatchToConfirm);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());

@@ -57,7 +57,7 @@ class _DispatchConfirmationScreenState
                   enabledBorder: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
                       borderSide: BorderSide(color: kNavy, width: 2)),
-                  hintText: "Enter count size",
+                  hintText: "Confirmation Code",
                   hintStyle: TextStyle(color: kNavy, fontSize: kNormalFont),
                 ),
                 keyboardType: TextInputType.text,

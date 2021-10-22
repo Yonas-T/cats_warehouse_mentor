@@ -32,8 +32,8 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
         truckPlateNo: 'Supplier Plate No',
         driverName: 'Supplier Driver',
         driverPhone: 'Supplier Driver Phone');
-    notifData!.add(NotificationData(
-        id: 1,
+    notifData.add(NotificationData(
+        id: 2,
         read: false,
         createdAt: '2021-10-15T12:39:02.066Z',
         title: 'Dispatch Notification',
@@ -86,7 +86,6 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
                           );
                         });
                   // }
-                  return Container();
                 },
               ),
             ),

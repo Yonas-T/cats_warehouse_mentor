@@ -4,6 +4,7 @@ import 'package:cats_warehouse_mentor/constants/constants.dart';
 // import 'package:cats_warehouse_mentor/cubit/notifications_cubit.dart';
 import 'package:cats_warehouse_mentor/repositories/notificationRepository.dart';
 import 'package:cats_warehouse_mentor/services/notificationServices/notificationService.dart';
+import 'package:cats_warehouse_mentor/utils/helperFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+      initConnectivity();
+
     notificationsBloc = NotificationsBloc(
         notificationRepository: widget.notificationRepository);
     notificationsBloc!.add(LoadNotification());
@@ -49,15 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // BlocProvider.of<NotificationsBloc>(context).fetchNotifications();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kNavy,
         title: Text("Home Screen"),
         actions: [
           BlocListener<NotificationsBloc, NotificationsState>(
-            listener: (context, state) {
-              
-            },
+            listener: (context, state) {},
             child: BlocBuilder<NotificationsBloc, NotificationsState>(
               builder: (context, state) {
                 print('Appbar state: ');

@@ -68,7 +68,8 @@ class _MyAppState extends State<MyApp> {
         }
         if (state is AuthenticatedState) {
           print('authentic');
-          return HomeScreenParent(
+          return 
+          HomeScreenParent(
           );
           // DispatchListingScreen(
           //   dispatchRepository: widget.dispatchRepository,

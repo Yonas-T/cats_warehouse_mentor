@@ -7,7 +7,7 @@ class Dispatch {
   String plateNo;
   String driverName;
   String driverPhone;
-  int quantity;
+  String quantity;
   String remark;
   int preparedById;
   String preparedByEmail;
@@ -30,8 +30,7 @@ class Dispatch {
       required this.preparedByEmail,
       required this.dispatchStatus,
       required this.destination,
-      this.status
-      });
+      this.status});
 
   factory Dispatch.fromJson(Map<String, dynamic> json) {
     return Dispatch(
@@ -70,7 +69,7 @@ class Dispatch {
     return data;
   }
 
-    dispatchMap() {
+  dispatchMap() {
     var mapping = Map<String, dynamic>();
     mapping['id'] = id;
     mapping['reference_no'] = referenceNo;
@@ -86,6 +85,7 @@ class Dispatch {
     mapping['prepared_by_email'] = preparedByEmail;
     mapping['dispatch_status'] = dispatchStatus;
     mapping['destination'] = destination;
+    mapping['status'] = status;
     return mapping;
   }
 }

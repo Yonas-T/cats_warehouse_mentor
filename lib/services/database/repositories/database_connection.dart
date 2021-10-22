@@ -15,7 +15,7 @@ class DatabaseConnection {
     await database.execute(
         "CREATE TABLE notificationdata(id INTEGER PRIMARY KEY ,read TEXT,created_at TEXT,title TEXT,body TEXT,date TEXT)");
     await database.execute(
-    "CREATE TABLE dispatch(id INTEGER PRIMARY KEY ,reference_no TEXT,allocation_item_id TEXT,transporter_id TEXT,transporter_name TEXT,plate_no TEXT,driver_name TEXT,driver_phone TEXT,quantity INTEGER,remark TEXT,prepared_by_id TEXT,prepared_by_email TEXT,dispatch_status TEXT,destination TEXT)");
+    "CREATE TABLE dispatch(id INTEGER PRIMARY KEY ,reference_no TEXT,allocation_item_id TEXT,transporter_id TEXT,transporter_name TEXT,plate_no TEXT,driver_name TEXT,driver_phone TEXT,quantity INTEGER,remark TEXT,prepared_by_id TEXT,prepared_by_email TEXT,dispatch_status TEXT,destination TEXT,status TEXT)");
     await database.execute(
         "CREATE TABLE receipt(commodity_status TEXT,dispatch_id TEXT,quantity INTEGER, remark TEXT,prepared_by_id TEXT)");
   }

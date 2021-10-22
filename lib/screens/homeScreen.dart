@@ -1,4 +1,5 @@
 import 'package:cats_warehouse_mentor/blocs/notifications/notifications_bloc.dart';
+import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/constants/constants.dart';
 // import 'package:cats_warehouse_mentor/cubit/notifications_cubit.dart';
 import 'package:cats_warehouse_mentor/repositories/notificationRepository.dart';
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // BlocProvider.of<NotificationsBloc>(context).fetchNotifications();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kNavy,
         title: Text("Home Screen"),
         actions: [
           BlocListener<NotificationsBloc, NotificationsState>(

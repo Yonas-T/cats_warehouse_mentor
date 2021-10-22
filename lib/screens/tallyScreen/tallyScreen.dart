@@ -178,6 +178,7 @@ class _TallyScreenState extends State<TallyScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text('Count', style: TextStyle(color: kWhite, fontSize: kTitleBoldFont),),
         backgroundColor: kNavy,
       ),
       body: BlocListener<DispatchBloc, DispatchState>(

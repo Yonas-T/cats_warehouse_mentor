@@ -47,6 +47,7 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Dispatches', style: TextStyle(color: kWhite, fontSize: kTitleBoldFont),),
         backgroundColor: kNavy,
       ),
       body: Column(

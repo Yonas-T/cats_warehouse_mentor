@@ -8,12 +8,61 @@ import 'package:cats_warehouse_mentor/screens/dispatchListingScreen/dispatchList
 import 'package:cats_warehouse_mentor/screens/homeScreen.dart';
 import 'package:cats_warehouse_mentor/screens/loginScreen/loginScreen.dart';
 import 'package:cats_warehouse_mentor/screens/tallyScreen/tallyScreen.dart';
+import 'package:cats_warehouse_mentor/services/notificationServices/notificationService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
+import 'dart:io';
 
-void main() {
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'package:rxdart/subjects.dart';
+
+
+final BehaviorSubject<String?> selectNotificationSubject =
+    BehaviorSubject<String?>();
+
+const MethodChannel platform =
+    MethodChannel('dexterx.dev/flutter_local_notifications_example');
+
+String? selectedNotificationPayload;
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(CatsApp());
+
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+      !kIsWeb && Platform.isLinux
+          ? null
+          : await NotificationServices()
+              .flutterLocalNotificationsPlugin
+              .getNotificationAppLaunchDetails();
+
+  //! needs to be changed with whatever is the landing screen
+  // String initialRoute = HomeScreen.routeName;
+  // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+  //   selectedNotificationPayload = notificationAppLaunchDetails!.payload;
+  //   //! needs to be changed with whatever screen is in the navigation function
+  //   // initialRoute = ThirdPage.routeName;
+  // }
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('app_icon');
+  // ignore: prefer_const_constructors
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+  await NotificationServices().flutterLocalNotificationsPlugin.initialize(
+      initializationSettings, onSelectNotification: (String? payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+    selectedNotificationPayload = payload;
+    selectNotificationSubject.add(payload);
+  });
+  runApp(CatsApp(
+
+  ));
 }
 
 class CatsApp extends StatefulWidget {
@@ -69,11 +118,11 @@ class _MyAppState extends State<MyApp> {
         if (state is AuthenticatedState) {
           print('authentic');
           return 
-          HomeScreenParent(
-          );
-          // DispatchListingScreen(
-          //   dispatchRepository: widget.dispatchRepository,
+          // HomeScreenParent(
           // );
+          DispatchListingScreen(
+            dispatchRepository: widget.dispatchRepository,
+          );
         }
         return Container();
       },

@@ -1,12 +1,15 @@
 import 'package:cats_warehouse_mentor/blocs/loginBloc/loginbloc_bloc.dart';
 import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/constants/constants.dart';
+import 'package:cats_warehouse_mentor/repositories/dispatchRepository.dart';
 import 'package:cats_warehouse_mentor/screens/dispatchConfirmationScreen/dispatchConfirmationScreen.dart';
+import 'package:cats_warehouse_mentor/screens/dispatchListingScreen/dispatchListingScreen.dart';
 import 'package:cats_warehouse_mentor/utils/helperFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormWidget extends StatefulWidget {
+  DispatchRepository dispatchRepository = DispatchRepository();
   @override
   _FormWidgetState createState() => _FormWidgetState();
 }
@@ -98,8 +101,9 @@ class _FormWidgetState extends State<FormWidget> {
                       print(state);
                       if (state is LoginSuccessState) {
                         Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return DispatchConfirmationScreen();
+                            .pushReplacement(MaterialPageRoute(builder: (context) {
+                          return DispatchListingScreen(
+                              dispatchRepository: widget.dispatchRepository);
                         }));
                       }
                     },

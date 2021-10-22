@@ -10,6 +10,7 @@ import 'package:cats_warehouse_mentor/screens/reportScreen/reportScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 class TallyParentScreen extends StatefulWidget {
   Notifications notificationForCount;
   TallyParentScreen({required this.notificationForCount});
@@ -454,8 +455,11 @@ class _TallyScreenState extends State<TallyScreen> {
                           preparedByEmail: 'preparedByEmail',
                           dispatchStatus: 'accepted',
                           destination: 'destination');
+                      print('pressed');
                       dispatchBloc!.add(
                           FinishCount(dispatchToConfirm: dispatchToConfirm!));
+        Navigator.pop(context);
+                       
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

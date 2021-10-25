@@ -458,7 +458,7 @@ class _TallyScreenState extends State<TallyScreen> {
                       print('pressed');
                       dispatchBloc!.add(
                           FinishCount(dispatchToConfirm: dispatchToConfirm!));
-        Navigator.pop(context);
+        // Navigator.pop(context);
                        
                     },
                     child: Container(

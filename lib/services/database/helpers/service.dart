@@ -1,7 +1,7 @@
 import '../../../models/receipt.dart';
 import '../../../models/dispatch.dart';
 import '../../../models/notifications.dart';
-
+import '../../../models/userCred.dart';
 import '../repositories/repository.dart';
 
 class NotificationDataService {
@@ -76,5 +76,30 @@ class ReceiptService {
 
   deletereceipt(receiptId) async {
     return await _repository!.deleteData('receipt', receiptId);
+  }
+}
+
+
+class UserService {
+  Repository? _repository;
+
+  UserService() {
+    _repository = Repository();
+  }
+
+  saveuser(user) async {
+    return await _repository!.insertData('user', user);
+  }
+
+  readuser() async {
+    return await _repository!.readData('user');
+  }
+
+  updateuser(UserAuth user) async {
+    return await _repository!.updateData('user', user.toJson());
+  }
+
+  deleteuser(receiptId) async {
+    return await _repository!.deleteData('user', receiptId);
   }
 }

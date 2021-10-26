@@ -43,6 +43,7 @@ Future<void> initConnectivity() async {
       fromLocalDb.forEach((element) {
         if (element['status'] == 'false') {
           element.remove('status');
+          
           dispatchApiProvider.dispatch(Dispatch.fromJson(element));
         }
       });

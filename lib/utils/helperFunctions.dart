@@ -45,6 +45,7 @@ Future<void> initConnectivity() async {
         if (element['status'] == 'false') {
           element.remove('status');
           dispatchApiProvider.dispatch(Reciept.fromJson(element));
+          
         }
       });
     } else {}

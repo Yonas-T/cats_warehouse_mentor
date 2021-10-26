@@ -12,7 +12,6 @@ class UserCred {
         user: parsedJson['user'] != null
             ? UserAuth.fromJson(parsedJson['user'])
             : null
-        // user: parsedJson['user'],
         );
   }
 

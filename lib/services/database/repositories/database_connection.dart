@@ -18,5 +18,8 @@ class DatabaseConnection {
     "CREATE TABLE dispatch(id INTEGER PRIMARY KEY ,reference_no TEXT,allocation_item_id TEXT,transporter_id TEXT,transporter_name TEXT,plate_no TEXT,driver_name TEXT,driver_phone TEXT,quantity INTEGER,remark TEXT,prepared_by_id TEXT,prepared_by_email TEXT,dispatch_status TEXT,destination TEXT,status TEXT)");
     await database.execute(
         "CREATE TABLE receipt(commodity_status TEXT,dispatch_id TEXT,quantity INTEGER, remark TEXT,prepared_by_id TEXT)");
+    await database.execute(
+    "CREATE TABLE user(id INTEGER PRIMARY KEY ,email TEXT,first_name TEXT,last_name TEXT,roles TEXT)");
+
   }
 }

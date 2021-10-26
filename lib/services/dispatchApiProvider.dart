@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:cats_warehouse_mentor/models/dispatch.dart';
 import 'package:cats_warehouse_mentor/models/notifications.dart';
+import 'package:cats_warehouse_mentor/models/receipt.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/baseUrl.dart';
 import './database/helpers/service.dart';
 
 class DispatchApiProvider {
-    DispatchService dispatchService = DispatchService();
+  DispatchService dispatchService = DispatchService();
 
   Future<Dispatch> fetchDispatch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +30,8 @@ class DispatchApiProvider {
       // postJson['status'] = 'true';
 
       try {
-        dispatchService.savedispatch(Dispatch.fromJson(jsonDecode(response.body)));
+        dispatchService
+            .savedispatch(Dispatch.fromJson(jsonDecode(response.body)));
       } catch (e) {
         print("exists already");
       }
@@ -39,25 +41,18 @@ class DispatchApiProvider {
       throw Exception('Failed to load');
     }
   }
-  Future<Dispatch> dispatch(Dispatch dispatch) async {
+
+  Future<Reciept> dispatch(Reciept reciept) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
     Map<String, dynamic> postJson = {
-      "id": dispatch.id,
-      "referenceNo": dispatch.referenceNo,
-      "allocationItemId": dispatch.allocationItemId,
-      "transporterId": dispatch.transporterId,
-      "transporterName": dispatch.transporterName,
-      "plateNo": dispatch.plateNo,
-      "driverName": dispatch.driverName,
-      "driverPhone": dispatch.driverPhone,
-      "quantity": dispatch.quantity,
-      "remark": dispatch.remark,
-      "preparedById": dispatch.preparedById,
-      "preparedByEmail": dispatch.preparedByEmail,
-      "dispatchStatus": dispatch.dispatchStatus,
-      "destination": dispatch.destination
+      "payload": {
+        "commodity_status": reciept.recieptData.commodityStatus,
+        "dispatch_id": reciept.recieptData.dispatchId,
+        "quantity": reciept.recieptData.quantity,
+        "remark": reciept.recieptData.remark,
+        "prepared_by_id": reciept.recieptData.preparedById,
+      },
     };
     var token = prefs.getString('user');
 
@@ -77,11 +72,11 @@ class DispatchApiProvider {
       postJson['status'] = 'true';
 
       try {
-        dispatchService.savedispatch(Dispatch.fromJson(postJson));
+        // dispatchService.savedispatch(Reciept.fromJson(postJson));
       } catch (e) {
         print("exists already");
       }
-      return Dispatch.fromJson(json.decode(response.body));
+      return Reciept.fromJson(json.decode(response.body));
     } else {
       postJson['status'] = 'false';
       throw Exception('Failed to load');

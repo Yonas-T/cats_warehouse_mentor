@@ -12,33 +12,59 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class DispatchListingScreen extends StatefulWidget {
-  DispatchRepository? dispatchRepository;
+  DispatchRepository dispatchRepository;
 
-  DispatchListingScreen(
-      {required this.dispatchRepository, this.notificationAppLaunchDetails});
-  static const String routeName = '/';
-
-  final NotificationAppLaunchDetails? notificationAppLaunchDetails;
-
-  bool get didNotificationLaunchApp =>
-      notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
-
+  DispatchListingScreen({required this.dispatchRepository});
   @override
   _DispatchListingScreenState createState() => _DispatchListingScreenState();
 }
 
 class _DispatchListingScreenState extends State<DispatchListingScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          DispatchBloc(dispatchRepository: widget.dispatchRepository),
+      child: DispatchListingChildScreen(
+          dispatchRepository: widget.dispatchRepository),
+    );
+  }
+}
+
+class DispatchListingChildScreen extends StatefulWidget {
+  DispatchRepository dispatchRepository;
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails;
+
+  DispatchListingChildScreen(
+      {required this.dispatchRepository, this.notificationAppLaunchDetails});
+  static const String routeName = '/';
+
+  bool get didNotificationLaunchApp =>
+      notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
+
+  @override
+  _DispatchListingChildScreenState createState() =>
+      _DispatchListingChildScreenState();
+}
+
+class _DispatchListingChildScreenState
+    extends State<DispatchListingChildScreen> {
   List<Notifications> dispatchToPass = [];
   List<NotificationData> notifData = [];
   NotificationBody? notifBody;
 
+  late DispatchBloc dispatchBloc;
+
   callNotification() async {
-    await NotificationServices().showNotification(notifData[0].title, notifBody!.bodyTitle);
+    await NotificationServices()
+        .showNotification(notifData[0].title, notifBody!.bodyTitle);
   }
 
   @override
   void initState() {
     initConnectivity();
+    dispatchBloc.add(DispatchFetchEvent());
+
     notifBody = NotificationBody(
         bodyTitle: 'Commodity with the following details...',
         dispatchRef: '0001',
@@ -58,7 +84,7 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
         body: notifBody!));
     dispatchToPass.add(Notifications(data: notifData, success: true));
     callNotification();
-    
+
     super.initState();
   }
 
@@ -106,25 +132,26 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
             child: Expanded(
               child: BlocBuilder<DispatchBloc, DispatchState>(
                 builder: (context, state) {
-                  // if (state is DispatchLoadingState) {
-                  //   return CircularProgressIndicator();
-                  // }
-                  // if (state is DispatchProceedState) {
-                  //   //TODO navigate to tally screen
-                  // }
-                  // if (state is DispatchFailedState) {
-                  //   return Text('failed');
-                  // }
-                  // if (state is DispatchLoadedState) {
-                  return ListView.builder(
-                      itemCount: dispatchToPass.length,
-                      itemBuilder: (context, index) {
-                        return DispatchExpansionWidget(
-                          state: state,
-                          dispatchNotification: dispatchToPass[index],
-                        );
-                      });
-                  // }
+                  if (state is DispatchLoadingState) {
+                    return CircularProgressIndicator();
+                  }
+                  if (state is DispatchProceedState) {
+                    //TODO navigate to tally screen
+                  }
+                  if (state is DispatchFailedState) {
+                    return Text('failed');
+                  }
+                  if (state is DispatchLoadedState) {
+                    return ListView.builder(
+                        itemCount: dispatchToPass.length,
+                        itemBuilder: (context, index) {
+                          return DispatchExpansionWidget(
+                            state: state,
+                            dispatchNotification: state.dispatchLoaded,
+                          );
+                        });
+                  }
+                  return Container();
                 },
               ),
             ),

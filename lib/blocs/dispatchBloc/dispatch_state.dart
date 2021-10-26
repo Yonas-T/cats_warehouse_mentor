@@ -63,7 +63,7 @@ class DispatchDamagedDecrementedState extends DispatchState {
 }
 
 class DispatchProceedState extends DispatchState {
-  Dispatch dispatchToConfirm;
+  List<Reciept> dispatchToConfirm;
 
   DispatchProceedState({required this.dispatchToConfirm});
 }

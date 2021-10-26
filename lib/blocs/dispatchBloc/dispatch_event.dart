@@ -43,7 +43,7 @@ class DamagedCountDecrement extends DispatchEvent {
 }
 
 class StartCount extends DispatchEvent {
-  Notifications notificationDataToCount;
+  Dispatch notificationDataToCount;
 
   StartCount({required this.notificationDataToCount});
 
@@ -54,7 +54,7 @@ class StartCount extends DispatchEvent {
 // class CountBatchSize extends DispatchEvent {}
 
 class FinishCount extends DispatchEvent {
-  Dispatch dispatchToConfirm;
+  List<Reciept> dispatchToConfirm;
 
   FinishCount({required this.dispatchToConfirm});
 

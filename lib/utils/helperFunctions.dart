@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cats_warehouse_mentor/models/receipt.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/services.dart';
 import '../services/database/helpers/service.dart';
@@ -43,7 +44,7 @@ Future<void> initConnectivity() async {
       fromLocalDb.forEach((element) {
         if (element['status'] == 'false') {
           element.remove('status');
-          dispatchApiProvider.dispatch(Dispatch.fromJson(element));
+          dispatchApiProvider.dispatch(Reciept.fromJson(element));
         }
       });
     } else {}

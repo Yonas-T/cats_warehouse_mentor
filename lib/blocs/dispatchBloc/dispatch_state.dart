@@ -21,7 +21,7 @@ class DispatchFailedState extends DispatchState {
 class DispatchLoadingState extends DispatchState {}
 
 class DispatchLoadedState extends DispatchState {
-  Notifications dispatchLoaded;
+  Dispatch dispatchLoaded;
 
   DispatchLoadedState({required this.dispatchLoaded});
 }

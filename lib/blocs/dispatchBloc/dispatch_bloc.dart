@@ -23,8 +23,8 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
     if (event is DispatchFetchEvent) {
       yield DispatchInitialState();
       try {
-        var notificationFrom = await dispatchRepository!.getNotification();
-        yield DispatchLoadedState(dispatchLoaded: notificationFrom);
+        var ispatchFetched = await dispatchRepository!.fetchDispatch();
+        yield DispatchLoadedState(dispatchLoaded: ispatchFetched);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());
       }

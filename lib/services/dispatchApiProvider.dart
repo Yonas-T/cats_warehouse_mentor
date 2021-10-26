@@ -8,10 +8,40 @@ import '../constants/baseUrl.dart';
 import './database/helpers/service.dart';
 
 class DispatchApiProvider {
+    DispatchService dispatchService = DispatchService();
+
+  Future<Dispatch> fetchDispatch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('user');
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/cats_core/dispatches/search?status[]=Started'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    print('BODY: ${response.body}');
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      // postJson['status'] = 'true';
+
+      try {
+        dispatchService.savedispatch(Dispatch.fromJson(jsonDecode(response.body)));
+      } catch (e) {
+        print("exists already");
+      }
+      return Dispatch.fromJson(json.decode(response.body));
+    } else {
+      // postJson['status'] = 'false';
+      throw Exception('Failed to load');
+    }
+  }
   Future<Dispatch> dispatch(Dispatch dispatch) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    DispatchService dispatchService = DispatchService();
 
     Map<String, dynamic> postJson = {
       "id": dispatch.id,

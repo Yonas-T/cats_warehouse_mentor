@@ -7,7 +7,9 @@ abstract class DispatchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class DispatchFetchEvent extends DispatchEvent {}
+class DispatchFetchEvent extends DispatchEvent {
+}
+
 
 class CountIncrement extends DispatchEvent {
   int currentValue;

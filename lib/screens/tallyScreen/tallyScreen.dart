@@ -196,7 +196,7 @@ class _TallyScreenState extends State<TallyScreen> {
         },
         child: BlocBuilder<DispatchBloc, DispatchState>(
           builder: (context, state) {
-            // if (state is DispatchLoadedState) {
+            if (state is DispatchLoadedState) {
             return Container(
               // margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
               padding: EdgeInsets.all(16),
@@ -294,7 +294,7 @@ class _TallyScreenState extends State<TallyScreen> {
                       Container(
                           width: MediaQuery.of(context).size.width * .45,
                           child: Text(
-                            commodityAmount.toString(),
+                            '${commodityAmount.toString()} /${state.dispatchLoaded.quantity}',
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.fade,
                             style:
@@ -475,8 +475,8 @@ class _TallyScreenState extends State<TallyScreen> {
                 ],
               ),
             );
-            // }
-            // return Container();
+            }
+            return Container();
           },
         ),
       ),

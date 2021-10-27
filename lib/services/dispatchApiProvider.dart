@@ -49,7 +49,7 @@ class DispatchApiProvider {
       try {
         dispatchService.savedispatch(Dispatch.fromJson(postJson));
       } catch (e) {
-        print("exists already");
+        print(e);
       }
       return Dispatch.fromJson(json.decode(response.body));
     } else {

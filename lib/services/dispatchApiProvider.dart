@@ -81,7 +81,7 @@ class DispatchApiProvider {
       try {
         // dispatchService.savedispatch(Reciept.fromJson(postJson));
       } catch (e) {
-        print("exists already");
+        print(e);
       }
       return Reciept.fromJson(json.decode(response.body));
     } else {

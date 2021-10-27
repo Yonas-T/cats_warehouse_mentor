@@ -30,10 +30,17 @@ class DispatchApiProvider {
       // postJson['status'] = 'true';
 
       try {
-        dispatchService
-            .savedispatch(Dispatch.fromJson(jsonDecode(response.body)));
+      
+        var s = await dispatchService.readdispatch();
+        print('DB: $s');
+        Dispatch.fromJson(jsonDecode(response.body))
+            .dispatchData
+            .forEach((element) {
+          dispatchService.savedispatch(element);
+          print('======================= $element');
+        });
       } catch (e) {
-        print("exists already");
+        print(e);
       }
       return Dispatch.fromJson(json.decode(response.body));
     } else {

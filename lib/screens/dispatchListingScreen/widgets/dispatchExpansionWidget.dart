@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DispatchExpansionWidget extends StatefulWidget {
-  Dispatch dispatchNotification;
+  DispatchData dispatchNotification;
   DispatchState state;
 
   DispatchExpansionWidget(
@@ -58,15 +58,15 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.3,
-                // child: Text(
-                //   '${widget.dispatchNotification.title}',
-                //   style: TextStyle(fontSize: kNormalFont, color: kNavy),
-                // ),
+                child: Text(
+                  '${widget.dispatchNotification.dispatchStatus}',
+                  style: TextStyle(fontSize: kNormalFont, color: kNavy),
+                ),
               ),
-              // Text(
-              //   '${widget.dispatchNotification.allocatedQuantity}',
-              //   style: TextStyle(fontSize: kNormalFont, color: kNavy),
-              // ),
+              Text(
+                '${widget.dispatchNotification.quantity}',
+                style: TextStyle(fontSize: kNormalFont, color: kNavy),
+              ),
             ],
           ),
           collapsedIconColor: kNavy,
@@ -85,33 +85,27 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Dispatch Ref: ',
-                    titleValue:
-                        widget.dispatchNotification.referenceNo,
+                    titleValue: widget.dispatchNotification.referenceNo,
                   ),
-                  
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Quantity: ',
-                    titleValue: widget.dispatchNotification.quantity
-                        .toString(),
+                    titleValue: widget.dispatchNotification.quantity.toString(),
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Driver\'s name: ',
-                    titleValue:
-                        widget.dispatchNotification.driverName,
+                    titleValue: widget.dispatchNotification.driverName,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Driver\'s phone No: ',
-                    titleValue:
-                        widget.dispatchNotification.driverPhone,
+                    titleValue: widget.dispatchNotification.driverPhone,
                   ),
                   SizedBox(height: 4),
                   NotificationBodyWidget(
                     titleKey: 'Truck plate No: ',
-                    titleValue:
-                        widget.dispatchNotification.plateNo,
+                    titleValue: widget.dispatchNotification.plateNo,
                   ),
                   SizedBox(height: 16),
                   Row(
@@ -133,11 +127,13 @@ class _DispatchExpansionWidgetState extends State<DispatchExpansionWidget> {
                                     widget.dispatchNotification),
                           );
                           Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return TallyParentScreen(
-                                notificationForCount:
-                                    widget.dispatchNotification);
-                          }));
+                            .push(MaterialPageRoute(builder: (context) {
+                          return TallyParentScreen(
+                            notificationForCount: widget.dispatchNotification,
+                          );
+                        }));
+                          print('tapped');
+
                         },
                       ),
                     ],

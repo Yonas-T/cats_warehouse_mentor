@@ -1,4 +1,19 @@
 class Dispatch {
+  bool success;
+  List<DispatchData> dispatchData;
+
+  Dispatch({required this.success, required this.dispatchData});
+
+  factory Dispatch.fromJson(Map<String, dynamic> parsedJson) {
+    final data = parsedJson['data'] as List;
+    List<DispatchData> dataList =
+        data.map((i) => DispatchData.fromJson(i)).toList();
+
+    return Dispatch(success: parsedJson['success'], dispatchData: dataList);
+  }
+}
+
+class DispatchData {
   int id;
   String referenceNo;
   int allocationItemId;
@@ -7,7 +22,7 @@ class Dispatch {
   String plateNo;
   String driverName;
   String driverPhone;
-  String quantity;
+  double quantity;
   String remark;
   int preparedById;
   String preparedByEmail;
@@ -15,7 +30,7 @@ class Dispatch {
   String destination;
   String? status;
 
-  Dispatch(
+  DispatchData(
       {required this.id,
       required this.referenceNo,
       required this.allocationItemId,
@@ -32,8 +47,8 @@ class Dispatch {
       required this.destination,
       this.status});
 
-  factory Dispatch.fromJson(Map<String, dynamic> json) {
-    return Dispatch(
+  factory DispatchData.fromJson(Map<String, dynamic> json) {
+    return DispatchData(
         id: json['id'],
         referenceNo: json['reference_no'],
         allocationItemId: json['allocation_item_id'],

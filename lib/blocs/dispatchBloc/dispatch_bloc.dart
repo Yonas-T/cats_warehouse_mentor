@@ -25,10 +25,15 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
       yield DispatchInitialState();
       try {
         var ispatchFetched = await dispatchRepository!.fetchDispatch();
+        print('in the bloc:' + ispatchFetched.dispatchData[0].driverName);
         yield DispatchLoadedState(dispatchLoaded: ispatchFetched);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());
       }
+    }
+
+    if (event is StartCount) {
+      yield DispatchProceedState(dispatchData: event.notificationDataToCount);
     }
 
     if (event is CountIncrement) {
@@ -70,12 +75,12 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
     if (event is FinishCount) {
       try {
         List<Reciept> dispatchToConfirm = event.dispatchToConfirm;
- 
-        dispatchToConfirm.forEach((element) async{
-           await dispatchRepository!.dispatch(dispatchToConfirm);
+
+        dispatchToConfirm.forEach((element) async {
+          await dispatchRepository!.dispatch(dispatchToConfirm);
         });
-        
-        yield DispatchProceedState(dispatchToConfirm: dispatchToConfirm);
+
+        yield DispatchSuccessState(dispatchConfirmed: dispatchToConfirm);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());
       }
@@ -83,8 +88,8 @@ class DispatchBloc extends Bloc<DispatchEvent, DispatchState> {
 
     if (event is WarehouseManagerConfirm) {
       try {
-        Dispatch dispatchConfirmed = event.dispatchConfirmed;
-        yield DispatchSuccessState(dispatchConfirmed: dispatchConfirmed);
+        // <Dispatch> dispatchConfirmed = event.dispatchConfirmed;
+        // yield DispatchSuccessState(dispatchConfirmed: dispatchConfirmed);
       } catch (e) {
         yield DispatchFailedState(message: e.toString());
       }

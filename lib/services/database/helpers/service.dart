@@ -38,7 +38,7 @@ class DispatchService {
     _repository = Repository();
   }
 
-  savedispatch(Dispatch dispatch) async {
+  savedispatch(DispatchData dispatch) async {
     return await _repository!.insertData('dispatch', dispatch.dispatchMap());
   }
 
@@ -46,7 +46,7 @@ class DispatchService {
     return await _repository!.readData('dispatch');
   }
 
-  updatedispatch(Dispatch dispatch) async {
+  updatedispatch(DispatchData dispatch) async {
     return await _repository!.updateData('dispatch', dispatch.dispatchMap());
   }
 

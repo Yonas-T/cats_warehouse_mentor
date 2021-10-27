@@ -10,10 +10,10 @@ class Reciept {
 
 class ReceiptData {
   String commodityStatus;
-  String dispatchId;
+  int dispatchId;
   int quantity;
   String remark;
-  String preparedById;
+  int preparedById;
 
   ReceiptData(
       {required this.commodityStatus,

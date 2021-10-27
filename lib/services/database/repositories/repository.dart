@@ -21,7 +21,7 @@ class Repository {
     print(data);
     print('*************');
     var connection = await database;
-    return await connection.insert(table, data);
+    return await connection.insert(table, data, conflictAlgorithm: ConflictAlgorithm.replace,);
   }
 
   readData(table) async {

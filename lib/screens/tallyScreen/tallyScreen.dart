@@ -4,13 +4,15 @@ import 'package:cats_warehouse_mentor/constants/constants.dart';
 import 'package:cats_warehouse_mentor/models/dispatch.dart';
 import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:cats_warehouse_mentor/models/receipt.dart';
+import 'package:cats_warehouse_mentor/models/userCred.dart';
 import 'package:cats_warehouse_mentor/repositories/dispatchRepository.dart';
 import 'package:cats_warehouse_mentor/screens/dispatchConfirmationScreen/dispatchConfirmationScreen.dart';
+import 'package:cats_warehouse_mentor/services/database/helpers/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TallyParentScreen extends StatefulWidget {
-  Dispatch notificationForCount;
+  DispatchData notificationForCount;
   TallyParentScreen({required this.notificationForCount});
 
   DispatchRepository dispatchRepository = DispatchRepository();
@@ -31,7 +33,7 @@ class _TallyParentScreenState extends State<TallyParentScreen> {
 }
 
 class TallyScreen extends StatefulWidget {
-  Dispatch notificationPassed;
+  DispatchData notificationPassed;
   DispatchRepository dispatchRepository = DispatchRepository();
 
   TallyScreen({required this.notificationPassed});
@@ -54,10 +56,18 @@ class _TallyScreenState extends State<TallyScreen> {
 
   TextEditingController textController = TextEditingController();
   FocusNode passfocus = FocusNode();
+  UserService userService = UserService();
+  UserAuth? userAuth;
+  readDatabase() async {
+    var queryOutput = await userService.readuser();
+    // userAuth = UserAuth.fromJson(queryOutput);
+    print('userAUth: ' + queryOutput);
+  }
 
   @override
   void initState() {
     dispatchBloc = DispatchBloc(dispatchRepository: widget.dispatchRepository);
+    readDatabase();
     textController.text = 1.toString();
     dispatchBloc!.add(DispatchFetchEvent());
     commodityAmount = 0;
@@ -189,7 +199,7 @@ class _TallyScreenState extends State<TallyScreen> {
       ),
       body: BlocListener<DispatchBloc, DispatchState>(
         listener: (context, state) {
-          if (state is DispatchProceedState) {
+          if (state is DispatchSuccessState) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return DispatchConfirmationScreen();
             }));
@@ -197,7 +207,8 @@ class _TallyScreenState extends State<TallyScreen> {
         },
         child: BlocBuilder<DispatchBloc, DispatchState>(
           builder: (context, state) {
-            if (state is DispatchLoadedState) {
+            print(state);
+            if (state is DispatchInitialState) {
               return Container(
                 // margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
                 padding: EdgeInsets.all(16),
@@ -299,7 +310,7 @@ class _TallyScreenState extends State<TallyScreen> {
                         Container(
                             width: MediaQuery.of(context).size.width * .45,
                             child: Text(
-                              '${commodityAmount.toString()} /${state.dispatchLoaded.quantity}',
+                              '${commodityAmount.toString()} /${widget.notificationPassed.quantity}',
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.fade,
                               style:
@@ -310,10 +321,13 @@ class _TallyScreenState extends State<TallyScreen> {
                           child: IconButton(
                               icon: Icon(Icons.add, color: Colors.white),
                               onPressed: () {
-                                setState(() {
+                                if (commodityAmount + batchCount < widget.notificationPassed.quantity) {
+                                  setState(() {
                                   commodityAmount =
                                       commodityAmount + batchCount;
                                 });
+                                } 
+                                
                               }),
                         ),
                       ],
@@ -401,8 +415,9 @@ class _TallyScreenState extends State<TallyScreen> {
                                 Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.35,
-                                    child: Text('Total',
-                                        // 'state.dispatchLoaded.data[0].body.quantity .\toString()',
+                                    child: Text(
+                                        widget.notificationPassed.quantity
+                                            .toString(),
                                         style: TextStyle(
                                             color: kNavy,
                                             fontSize: kNormalFont))),
@@ -444,21 +459,23 @@ class _TallyScreenState extends State<TallyScreen> {
                     ),
                     InkWell(
                       onTap: () {
+                        print('pressed');
                         ReceiptData receiptData = ReceiptData(
-                            commodityStatus: 'recieved',
-                            dispatchId: 'dispatchId',
-                            preparedById: 'preparedById',
+                            commodityStatus: 'Good',
+                            dispatchId: widget.notificationPassed.id,
+                            preparedById: userAuth!.id,
                             quantity: 10,
                             remark: 'remark');
                         ReceiptData receiptDataDamaged = ReceiptData(
-                            commodityStatus: 'recieved',
-                            dispatchId: 'dispatchId',
-                            preparedById: 'preparedById',
+                            commodityStatus: 'Damaged',
+                            dispatchId: widget.notificationPassed.id,
+                            preparedById: userAuth!.id,
                             quantity: 10,
                             remark: 'remark');
                         dispatchToConfirm = Reciept(recieptData: receiptData);
                         dispatchToConfirmDamaged =
                             Reciept(recieptData: receiptDataDamaged);
+                        print('pressed');
 
                         List<Reciept> listOfReciepts = [];
                         listOfReciepts.addAll(
@@ -466,7 +483,6 @@ class _TallyScreenState extends State<TallyScreen> {
                         print('pressed');
                         dispatchBloc!.add(
                             FinishCount(dispatchToConfirm: listOfReciepts));
-                        // Navigator.pop(context);
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,

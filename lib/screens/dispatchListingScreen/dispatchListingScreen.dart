@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cats_warehouse_mentor/blocs/dispatchBloc/dispatch_bloc.dart';
 import 'package:cats_warehouse_mentor/constants/colors.dart';
 import 'package:cats_warehouse_mentor/constants/constants.dart';
@@ -5,6 +7,7 @@ import 'package:cats_warehouse_mentor/main.dart';
 import 'package:cats_warehouse_mentor/models/notifications.dart';
 import 'package:cats_warehouse_mentor/repositories/dispatchRepository.dart';
 import 'package:cats_warehouse_mentor/screens/dispatchListingScreen/widgets/dispatchExpansionWidget.dart';
+import 'package:cats_warehouse_mentor/screens/tallyScreen/tallyScreen.dart';
 import 'package:cats_warehouse_mentor/services/notificationServices/notificationService.dart';
 import 'package:cats_warehouse_mentor/utils/helperFunctions.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +27,8 @@ class _DispatchListingScreenState extends State<DispatchListingScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          DispatchBloc(dispatchRepository: widget.dispatchRepository),
+          DispatchBloc(dispatchRepository: widget.dispatchRepository)
+            ..add(DispatchFetchEvent()),
       child: DispatchListingChildScreen(
           dispatchRepository: widget.dispatchRepository),
     );
@@ -63,7 +67,9 @@ class _DispatchListingChildScreenState
   @override
   void initState() {
     initConnectivity();
-    dispatchBloc.add(DispatchFetchEvent());
+    // DispatchBloc dispatchBloc =
+    //     DispatchBloc(dispatchRepository: widget.dispatchRepository);
+    // dispatchBloc.add(DispatchFetchEvent());
 
     notifBody = NotificationBody(
         bodyTitle: 'Commodity with the following details...',
@@ -126,34 +132,46 @@ class _DispatchListingChildScreenState
                   style: TextStyle(color: kNavy, fontSize: kTitleBoldFont)),
             ],
           ),
-          BlocProvider(
-            create: (context) =>
-                DispatchBloc(dispatchRepository: widget.dispatchRepository),
-            child: Expanded(
-              child: BlocBuilder<DispatchBloc, DispatchState>(
-                builder: (context, state) {
-                  if (state is DispatchLoadingState) {
-                    return CircularProgressIndicator();
-                  }
-                  if (state is DispatchProceedState) {
-                    //TODO navigate to tally screen
-                  }
-                  if (state is DispatchFailedState) {
-                    return Text('failed');
-                  }
-                  if (state is DispatchLoadedState) {
-                    return ListView.builder(
-                        itemCount: dispatchToPass.length,
+          BlocListener<DispatchBloc, DispatchState>(
+            listener: (context, state) {
+              
+            },
+            child: BlocBuilder<DispatchBloc, DispatchState>(
+              builder: (context, state) {
+                print(state);
+                if (state is DispatchInitialState) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(kNavy),
+                  ));
+                }
+                if (state is DispatchLoadingState) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(kNavy),
+                    ),
+                  );
+                }
+                if (state is DispatchFailedState) {
+                  return Text('failed ${state.message}');
+                }
+                if (state is DispatchLoadedState) {
+                  log('message');
+                  return Expanded(
+                    child: ListView.builder(
+                        itemCount: state.dispatchLoaded.dispatchData.length,
+                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return DispatchExpansionWidget(
                             state: state,
-                            dispatchNotification: state.dispatchLoaded,
+                            dispatchNotification:
+                                state.dispatchLoaded.dispatchData[index],
                           );
-                        });
-                  }
-                  return Container();
-                },
-              ),
+                        }),
+                  );
+                }
+                return Container();
+              },
             ),
           ),
         ],
